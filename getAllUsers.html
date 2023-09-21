@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+    <body>
+<!--    header-->
+        <div class="container-fluid p-3 mb-2 bg-dark text-white">
+            <div class="d-flex bd-highlight ">
+                <div class="p-2 flex-grow-1 bd-highlight" th:text="${userByPrincipalName.getEmail()} + ' with roles: ' + ${userByPrincipalName.toStringRoles().replaceAll('ROLE_','')}">
+                    Одна из 2x колонок
+                </div>
+                <div class="p-2 bd-highlight">
+                    <a class="text-secondary" th:href="@{/logout}">Logout</a>
+                </div>
+            </div>
+        </div>
+
+<!--    main-->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-2">
+                    <nav class="nav flex-column nav-pills">
+                        <a class="nav-link active " href="#">Admin</a>
+                        <a class="nav-link" href="/admin/admin-info/">User</a>
+                    </nav>
+                </div>
+
+                <div class="col-10 bg-light">
+                    <h2> Admin panel </h2> <br />
+
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Users table</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/add">New User</a>
+                        </li>
+                    </ul>
+                    <br/>
+
+                    <h6> &nbsp;&nbsp;&nbsp;&nbsp;All users </h6>
+
+                    <table class="table table-striped bg-white">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Age</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+                                 <!--   Start modal edit-->
+                                 <div class="modal" id="exampleModalCentered" tabindex="-1" role="form" aria-labelledby="exampleModalCenteredLabel"
+                                 aria-hidden="true" th:id="|modal-${userStat.index}|" th:object="${user}">
+
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenteredLabel">Edit user</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form th:method="PATCH" th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
+                                                <div class="form-group text-center">
+                                                    <label class="font-weight-bold" for="formGroupExampleInput">Id</label>
+                                                    <input type="text" th:value="*{id}" disabled class="form-control" id="formGroupExampleInput">
+                                                </div>
+                                                <div class="form-group text-center">
+                                                    <label class="font-weight-bold" for="formGroupExampleInput1">First name</label>
+                                                    <input type="text" th:value="*{username}" class="form-control" id="formGroupExampleInput1" name="username">
+                                                </div>
+                                                <div class="form-group text-center">
+                                                    <label class="font-weight-bold" for="formGroupExampleInput2">Last name</label>
+                                                    <input type="text" th:value="*{lastname}" class="form-control"  id="formGroupExampleInput2" name="lastname">
+                                                </div>
+
+                                                <div class="form-group text-center">
+                                                    <label class="font-weight-bold" for="formGroupExampleInput3">Age</label>
+                                                    <input type="text" th:value="*{age}" class="form-control"  id="formGroupExampleInput3" name="age">
+                                                </div>
+
+                                                <div class="form-group text-center">
+                                                    <label class="font-weight-bold" for="formGroupExampleInput4">Email</label>
+                                                    <input type="email" th:value="*{email}" class="form-control"  id="formGroupExampleInput4" name="email">
+                                                </div>
+
+                                                <div class="form-group text-center">
+                                                    <label class="font-weight-bold" for="deleteModalPass">Password</label>
+                                                    <input type="password" th:value="*{password}" class="form-control"  id="deleteModalPass" name="password">
+                                                </div>
+
+                                                <div class="form-group text-center">
+                                                    <label class="font-weight-bold" for="formGroupExampleInput6">Role</label><br/>
+                                                    <select name="roles" class="form-select w-100 p-2" multiple aria-label="multiple select example" id="formGroupExampleInput6">
+                                                        <option th:each="role : ${roles}" th:value="${role.getId()}"
+                                                                th:text="${role.getName().replaceAll('ROLE_','')}">role
+                                                        </option>
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <input type="submit" class="btn btn-primary" value="Edit"/>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End edit modal-->
+
+
+                            <!--                                    Start modal DELETE-->
+
+                            <div class="modal" id="deleteModal" tabindex="-1" role="form" aria-labelledby="deleteModalLabel"
+                            aria-hidden="true" th:id="|deleteModal-${userStat.index}|" th:object="${users}">
+
+                           <div class="modal-dialog modal-dialog-centered" role="document">
+                               <div class="modal-content">
+                                   <div class="modal-header">
+                                       <h5 class="modal-title" id="deleteModalLabel">Delete user</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                           <span aria-hidden="true">×</span>
+                                       </button>
+                                   </div>
+                                   <div class="modal-body">
+                                       <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}"
+                                             th:object="${user}">
+                                           <div class="form-group text-center">
+                                               <label class="font-weight-bold" for="deleteModalId">Id</label>
+                                               <input type="text" th:value="*{id}" disabled class="form-control" id="deleteModalId">
+                                           </div>
+                                           <div class="form-group text-center">
+                                               <label class="font-weight-bold" for="deleteModalUsername">First name</label>
+                                               <input type="text" th:value="*{username}" disabled class="form-control" id="deleteModalUsername" name="username">
+                                           </div>
+                                           <div class="form-group text-center">
+                                               <label class="font-weight-bold" for="deleteModalLastName">Last name</label>
+                                               <input type="text" th:value="*{lastname}" disabled class="form-control"  id="deleteModalLastName" name="lastname">
+                                           </div>
+
+                                           <div class="form-group text-center">
+                                               <label class="font-weight-bold" for="deleteModalAge">Age</label>
+                                               <input type="text" th:value="*{age}" disabled class="form-control"  id="deleteModalAge" name="age">
+                                           </div>
+
+                                           <div class="form-group text-center">
+                                               <label class="font-weight-bold" for="deleteModalEmail">Email</label>
+                                               <input type="email" th:value="*{email}" disabled class="form-control"  id="deleteModalEmail" name="email">
+                                           </div>
+
+                                           <div class="form-group text-center">
+                                               <label class="font-weight-bold" for="deleteModalRole">Role</label><br/>
+                                               <select name="roles" disabled class="form-select w-100 p-2" multiple aria-label="multiple select example" id="deleteModalRole">
+                                                   <option th:each="role : ${roles}" th:value="${role.getId()}"
+                                                           th:text="${role.getName().replaceAll('ROLE_','')}">role
+                                                   </option>
+                                               </select>
+                                           </div>
+                                           <div class="modal-footer">
+                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                               <input type="submit" id="btnDeleteModal" class="btn btn-danger" value="Delete"/>
+                                           </div>
+                                       </form>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <!-- End delete modal -->
+
+
+
+
+
+
+
+        <h1 id="h1Teg">Hello world!</h1>
+        
+        
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="js/createUsersTable.js"></script>
+    </body>
+</html>
