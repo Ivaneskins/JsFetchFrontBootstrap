@@ -144,45 +144,45 @@
                                            <span aria-hidden="true">×</span>
                                        </button>
                                    </div>
-                                   <div class="modal-body">
-                                       <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}"
-                                             th:object="${user}">
-                                           <div class="form-group text-center">
+                                   <div class="modal-body" >
+                                       <form id="formDelete">
+                                           <!-- <div class="form-group text-center">
                                                <label class="font-weight-bold" for="deleteModalId">Id</label>
-                                               <input type="text" th:value="*{id}" disabled class="form-control" id="deleteModalId">
+                                               <input type="text" disabled class="form-control" id="deleteModalId">
                                            </div>
                                            <div class="form-group text-center">
                                                <label class="font-weight-bold" for="deleteModalUsername">First name</label>
-                                               <input type="text" th:value="*{username}" disabled class="form-control" id="deleteModalUsername" name="username">
+                                               <input type="text" disabled class="form-control" id="deleteModalUsername" name="username">
                                            </div>
                                            <div class="form-group text-center">
                                                <label class="font-weight-bold" for="deleteModalLastName">Last name</label>
-                                               <input type="text" th:value="*{lastname}" disabled class="form-control"  id="deleteModalLastName" name="lastname">
+                                               <input type="text" disabled class="form-control"  id="deleteModalLastName" name="lastname">
                                            </div>
 
                                            <div class="form-group text-center">
                                                <label class="font-weight-bold" for="deleteModalAge">Age</label>
-                                               <input type="text" th:value="*{age}" disabled class="form-control"  id="deleteModalAge" name="age">
+                                               <input type="text" disabled class="form-control"  id="deleteModalAge" name="age">
                                            </div>
 
                                            <div class="form-group text-center">
                                                <label class="font-weight-bold" for="deleteModalEmail">Email</label>
-                                               <input type="email" th:value="*{email}" disabled class="form-control"  id="deleteModalEmail" name="email">
+                                               <input type="email" disabled class="form-control"  id="deleteModalEmail" name="email">
                                            </div>
 
                                            <div class="form-group text-center">
                                                <label class="font-weight-bold" for="deleteModalRole">Role</label><br/>
                                                <select name="roles" disabled class="form-select w-100 p-2" multiple aria-label="multiple select example" id="deleteModalRole">
-                                                   <option th:each="role : ${roles}" th:value="${role.getId()}"
-                                                           th:text="${role.getName().replaceAll('ROLE_','')}">role
-                                                   </option>
+                                                   
                                                </select>
                                            </div>
                                            <div class="modal-footer">
                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                <input type="submit" id="btnDeleteModal" class="btn btn-danger" value="Delete"/>
-                                           </div>
+                                               <input type="submit" class="btn btn-danger" value="Delete"/>
+                                           </div> -->
                                        </form>
+
+
                                    </div>
                                </div>
                            </div>
@@ -204,6 +204,9 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="js/fetchRestRequests.js"></script>
         <script src="js/createUsersTable.js"></script>
+        <!-- <script src="js/deleteModalUser.js"></script> -->
+        
     </body>
 </html>
