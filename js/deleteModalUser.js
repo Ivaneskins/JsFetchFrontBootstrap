@@ -36,7 +36,7 @@ async function getUserOnDeleteForm(userId) {
 
             btnDeleteModal.addEventListener('click', function(e) {                
                 e.preventDefault();
-                // deleteUserById(user.id);                                
+                deleteUserById(user.id);                                
                 modal.hide();                
             })
         }

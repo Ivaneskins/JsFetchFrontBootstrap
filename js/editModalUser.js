@@ -30,7 +30,7 @@ async function getEditModal(userId) {
             deleteModalRole.innerHTML = "";
 
             //получение всех ролей и заполнение данными в edit form
-            getAllRoles();          
+            getAllRoles('editModalRole');          
 
             let btnDeleteModal = document.getElementById(`edit${user.id}`);  
 
