@@ -9,8 +9,7 @@ async function getUserOnDeleteForm(userId) {
         .then(user => {    
             console.log("getUserOnDeleteForm function started...");
 
-            fillModalForm(userId);
-
+            fillDeleteModalForm(userId);
 
             let modal = new bootstrap.Modal(document.querySelector('#deleteModal'));
             // let modal = new bootstrap.Modal();
@@ -33,56 +32,54 @@ async function getUserOnDeleteForm(userId) {
             opt.text = rolesToString;
             deleteModalRole.appendChild(opt);             
 
-            let btnDeleteModal = document.getElementById(user.id);  
+            let btnDeleteModal = document.getElementById(`delete${user.id}`);  
 
             btnDeleteModal.addEventListener('click', function(e) {                
                 e.preventDefault();
-                deleteUserById(user.id);                                
+                // deleteUserById(user.id);                                
                 modal.hide();                
             })
         }
         
     )} 
 
-
-
-
-async function fillModalForm(userId) {
+// create HTML code of modal DELETE form
+async function fillDeleteModalForm(userId) {
     let formModal = document.getElementById('formDelete');
     formModal.innerHTML = '';
     formModal.innerHTML = `
     <div class="form-group text-center">
-    <label class="font-weight-bold" for="deleteModalId">Id</label>
-    <input type="text" disabled class="form-control" id="deleteModalId">
-</div>
-<div class="form-group text-center">
-    <label class="font-weight-bold" for="deleteModalUsername">First name</label>
-    <input type="text" disabled class="form-control" id="deleteModalUsername" name="username">
-</div>
-<div class="form-group text-center">
-    <label class="font-weight-bold" for="deleteModalLastName">Last name</label>
-    <input type="text" disabled class="form-control"  id="deleteModalLastName" name="lastname">
-</div>
+        <label class="font-weight-bold" for="deleteModalId">Id</label>
+        <input type="text" disabled class="form-control" id="deleteModalId">
+    </div>
+    <div class="form-group text-center">
+        <label class="font-weight-bold" for="deleteModalUsername">First name</label>
+        <input type="text" disabled class="form-control" id="deleteModalUsername" name="username">
+    </div>
+    <div class="form-group text-center">
+        <label class="font-weight-bold" for="deleteModalLastName">Last name</label>
+        <input type="text" disabled class="form-control"  id="deleteModalLastName" name="lastname">
+    </div>
 
-<div class="form-group text-center">
-    <label class="font-weight-bold" for="deleteModalAge">Age</label>
-    <input type="text" disabled class="form-control"  id="deleteModalAge" name="age">
-</div>
+    <div class="form-group text-center">
+        <label class="font-weight-bold" for="deleteModalAge">Age</label>
+        <input type="text" disabled class="form-control"  id="deleteModalAge" name="age">
+    </div>
 
-<div class="form-group text-center">
-    <label class="font-weight-bold" for="deleteModalEmail">Email</label>
-    <input type="email" disabled class="form-control"  id="deleteModalEmail" name="email">
-</div>
+    <div class="form-group text-center">
+        <label class="font-weight-bold" for="deleteModalEmail">Email</label>
+        <input type="email" disabled class="form-control"  id="deleteModalEmail" name="email">
+    </div>
 
-<div class="form-group text-center">
-    <label class="font-weight-bold" for="deleteModalRole">Role</label><br/>
-    <select name="roles" disabled class="form-select w-100 p-2" multiple aria-label="multiple select example" id="deleteModalRole">
+    <div class="form-group text-center">
+        <label class="font-weight-bold" for="deleteModalRole">Role</label><br/>
+        <select name="roles" disabled class="form-select w-100 p-2" multiple aria-label="multiple select example" id="deleteModalRole">
+            
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" id="delete${userId}" class="btn btn-danger" value="Delete"/>
         
-    </select>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    <input type="submit" id="${userId}" class="btn btn-danger" value="Delete"/>
-    
-</div>`
+    </div>`
 }
