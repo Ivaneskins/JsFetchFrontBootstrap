@@ -1,5 +1,5 @@
 
-// fill delete modal with user data
+// fill edit modal with user data
 
 async function getEditModal(userId) {  
     console.log('Вызвана функция getEditModal');
@@ -19,6 +19,7 @@ async function getEditModal(userId) {
             let deleteModalLastName = document.getElementById('editModalLastName').value = user.lastname;            
             let deleteModalAge = document.getElementById('editModalAge').value = user.age;           
             let deleteModalEmail = document.getElementById('editModalEmail').value = user.email; 
+            let editModalPassword = document.getElementById('editModalPassword').value = user.password;
           
             console.log("user = " + user.roles);
             rolesToString = '';
@@ -27,16 +28,16 @@ async function getEditModal(userId) {
             }            
             let deleteModalRole = document.getElementById('editModalRole');
             deleteModalRole.innerHTML = "";
-            let opt = document.createElement('option');
-            opt.text = rolesToString;
-            deleteModalRole.appendChild(opt);             
+
+            //получение всех ролей и заполнение данными в edit form
+            getAllRoles();          
 
             let btnDeleteModal = document.getElementById(`edit${user.id}`);  
 
             btnDeleteModal.addEventListener('click', function(e) {  
                 console.log("edit vutton отработал");              
                 e.preventDefault();
-                // deleteUserById(user.id);                                
+                editUserById(user.id);                                
                 modal.hide();                
             })
         }
@@ -46,18 +47,11 @@ async function getEditModal(userId) {
 // create HTML code of modal DELETE form
 async function fillModalEditForm(userId) {
     let formModal = document.getElementById('formEdit');
-
-
-    //получение всех ролей таблицы через fetch
-    getAllRoles();
-
-    
-
     formModal.innerHTML = '';
     formModal.innerHTML = `
     <div class="form-group text-center">
         <label class="font-weight-bold" for="editModalId">Id</label>
-        <input type="text" class="form-control" id="editModalId">
+        <input type="text" class="form-control" id="editModalId" name="id">
     </div>
     <div class="form-group text-center">
         <label class="font-weight-bold" for="editModalUsername">First name</label>
@@ -67,6 +61,11 @@ async function fillModalEditForm(userId) {
         <label class="font-weight-bold" for="editModalLastName">Last name</label>
         <input type="text" class="form-control"  id="editModalLastName" name="lastname">
     </div>
+
+    <div class="form-group text-center">
+    <label class="font-weight-bold" for="editModalPassword">Password</label>
+    <input type="password" class="form-control"  id="editModalPassword" name="password">
+</div>
 
     <div class="form-group text-center">
         <label class="font-weight-bold" for="editModalAge">Age</label>
